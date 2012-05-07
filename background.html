@@ -121,7 +121,10 @@ function onRequest(request, sender, callback) {
         delete url_clickers[sender.tab.url]
         chrome.tabs.sendRequest(respond_tabid, {action: 'respondLauncherID', report:report}, function(){});
         
-    }
+    }else if(request.action == 'blockUser'){
+		chrome.tabs.create({url:request.url, active:false});
+		callback(request.id);
+	}
 };
 
 // Wire up the listener.

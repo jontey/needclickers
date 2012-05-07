@@ -48,23 +48,28 @@ var showCompare = function(ids, message){
     for(var i in ids){
         $content.append(
 	        $('<div class="clicker-icon" style="margin-left:4px;">')
-	        .click(function() {blockuser(ids[i]); })
-	        .append($('<a target="_blank" href="/user/' + ids[i] + '"  class="user-name">')
+	        .append($('<a target="_blank" id="'+ids[i]+'" style="cursor:pointer;" class="user-name">')
+	        .click(function() {blockuser(this); })
 	        .append($('<img class="user-icon">')
                     .attr('src','http://graph.facebook.com/' + ids[i] + '/picture')))
         )
     }
 }
 
-var blockuser = function(id){
+var blockuser = function(div){
+	var id = div.id;
+	chrome.extension.sendRequest({'action' : 'blockUser', 'url' : 'http://www.needclickers.com/user/'+id , 'id' : id}, function(id){doblock(id)});
+}
+
+var doblock = function(id){
 	$.post("/addtoblacklist", {id: id}, 
 	function(data){
 		if(data){
 			if(data == 's'){
-				console.log("success");
+				console.log(id+" success");
 			}
 		}
-	});
+	});	
 }
 
 /*  castleagegame.com  */
