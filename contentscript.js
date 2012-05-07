@@ -48,13 +48,24 @@ var showCompare = function(ids, message){
     for(var i in ids){
         $content.append(
 	        $('<div class="clicker-icon" style="margin-left:4px;">')
-	        .append($('<a target="_blank" href="/user/' + ids[i] + '" class="user-name">')
+	        .click(function() {blockuser(ids[i]); })
+	        .append($('<a target="_blank" href="/user/' + ids[i] + '"  class="user-name">')
 	        .append($('<img class="user-icon">')
                     .attr('src','http://graph.facebook.com/' + ids[i] + '/picture')))
         )
     }
 }
 
+var blockuser = function(id){
+	$.post("/addtoblacklist", {id: id}, 
+	function(data){
+		if(data){
+			if(data == 's'){
+				console.log("success");
+			}
+		}
+	});
+}
 
 /*  castleagegame.com  */
 if( window.location.host == 'web.castleagegame.com'){
