@@ -88,7 +88,8 @@ if( window.location.host == 'web.castleagegame.com'){
             //extract ids
             if(namelinks){
 			    $.each(namelinks, function(i, a){
-			        id = a.href.split('http://apps.facebook.com/castle_age/keep.php?casuser=')[1]; 
+			        id = /casuser=([0-9]+)/.exec(a.href)[1];
+			        //.split('http://apps.facebook.com/castle_age/keep.php?casuser=')[1]; 
 			        if(id){
 			           launch_user_ids.push(id);
 			        }

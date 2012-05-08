@@ -122,7 +122,10 @@ function onRequest(request, sender, callback) {
         chrome.tabs.sendRequest(respond_tabid, {action: 'respondLauncherID', report:report}, function(){});
         
     }else if(request.action == 'blockUser'){
-		chrome.tabs.create({url:request.url, active:false});
+		chrome.tabs.create({url:request.url, active:false}, function(tab){
+			console.log(tab);
+			setTimeout(function(){chrome.tabs.remove(tab.id);},5000);
+		});
 		callback(request.id);
 	}
 };
